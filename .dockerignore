@@ -1,0 +1,4 @@
+*
+!docker/entrypoint.sh
+!docker/asadmin.commands
+!docdoku-plm-server-ear/target/docdoku-plm-server-ear.ear

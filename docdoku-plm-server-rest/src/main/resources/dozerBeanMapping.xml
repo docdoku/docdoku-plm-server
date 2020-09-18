@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <custom-converters> <!-- these are always bi-directional -->
+            <converter type="com.docdoku.plm.server.rest.converters.BinaryResourceToStringDozerConverter" >
+                <class-a>com.docdoku.plm.server.core.common.BinaryResource</class-a>
+                <class-b>java.lang.String</class-b>
+            </converter>
+            <converter type="com.docdoku.plm.server.rest.converters.InstanceAttributeDozerConverter" >
+                <class-a>com.docdoku.plm.server.core.meta.InstanceAttribute</class-a>
+                <class-b>com.docdoku.plm.server.rest.dto.InstanceAttributeDTO</class-b>
+            </converter>
+            <converter type="com.docdoku.plm.server.rest.converters.InstanceAttributeTemplateDozerConverter" >
+                <class-a>com.docdoku.plm.server.core.meta.InstanceAttributeTemplate</class-a>
+                <class-b>com.docdoku.plm.server.rest.dto.InstanceAttributeTemplateDTO</class-b>
+            </converter>
+            <converter type="com.docdoku.plm.server.rest.converters.ActivityModelDozerConverter" >
+                <class-a>com.docdoku.plm.server.core.workflow.ActivityModel</class-a>
+                <class-b>com.docdoku.plm.server.rest.dto.ActivityModelDTO</class-b>
+            </converter>
+            <converter type="com.docdoku.plm.server.rest.converters.ActivityDozerConverter" >
+                <class-a>com.docdoku.plm.server.core.workflow.Activity</class-a>
+                <class-b>com.docdoku.plm.server.rest.dto.ActivityDTO</class-b>
+            </converter>
+            <converter type="com.docdoku.plm.server.rest.converters.AclDozerConverter" >
+                <class-a>com.docdoku.plm.server.core.security.ACL</class-a>
+                <class-b>com.docdoku.plm.server.rest.dto.ACLDTO</class-b>
+            </converter>
+            <converter type="com.docdoku.plm.server.rest.converters.WebhookDozerConverter" >
+                <class-a>com.docdoku.plm.server.core.hooks.Webhook</class-a>
+                <class-b>com.docdoku.plm.server.rest.dto.WebhookDTO</class-b>
+            </converter>
+            <converter type="com.docdoku.plm.server.rest.converters.ConversionResultDozerConverter" >
+                <class-a>com.docdoku.plm.server.core.product.ConversionResult</class-a>
+                <class-b>com.docdoku.plm.server.rest.dto.ConversionResultDTO</class-b>
+            </converter>
+        </custom-converters>    
+    </configuration>
+    
+    <mapping>
+        <class-a>com.docdoku.plm.server.core.document.DocumentLink</class-a>
+        <class-b>com.docdoku.plm.server.rest.dto.DocumentRevisionDTO</class-b>
+        <field>
+            <a>targetDocumentMasterId</a>
+            <b>documentMasterId</b>
+        </field>
+        <field>
+            <a>targetDocumentVersion</a>
+            <b>version</b>
+        </field>
+        <field>
+            <a>targetDocumentWorkspaceId</a>
+            <b>workspaceId</b>
+        </field>
+        <field>
+            <a>comment</a>
+            <b>commentLink</b>
+        </field>
+        <field>
+            <a>documentTitle</a>
+            <b>title</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>com.docdoku.plm.server.core.meta.ListOfValues</class-a>
+        <class-b>com.docdoku.plm.server.rest.dto.ListOfValuesDTO</class-b>
+        <field>
+            <a>name</a>
+            <b>id</b>
+        </field>
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+    </mapping>
+
+
+</mappings>

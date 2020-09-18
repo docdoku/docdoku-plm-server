@@ -1,0 +1,46 @@
+create-jdbc-connection-pool --restype javax.sql.ConnectionPoolDataSource --datasourceclassname org.postgresql.ds.PGConnectionPoolDataSource DocDokuPLMPool
+ create-jdbc-resource --connectionpoolid DocDokuPLMPool jdbc/docdokuPU
+ set resources.jdbc-connection-pool.DocDokuPLMPool.property.ServerName=${ENV=DATABASE_SERVER_NAME}
+ set resources.jdbc-connection-pool.DocDokuPLMPool.property.User=${ENV=DATABASE_USER}
+ set resources.jdbc-connection-pool.DocDokuPLMPool.property.Password=${ENV=DATABASE_PWD}
+ set resources.jdbc-connection-pool.DocDokuPLMPool.property.DatabaseName=${ENV=DATABASE_NAME}
+ ping-connection-pool DocDokuPLMPool
+ create-custom-resource --restype java.util.Properties --factoryclass org.glassfish.resources.custom.factory.PropertiesFactory docdokuplm.config
+ create-custom-resource --restype java.util.Properties --factoryclass org.glassfish.resources.custom.factory.PropertiesFactory auth.config
+ create-custom-resource --restype java.util.Properties --factoryclass org.glassfish.resources.custom.factory.PropertiesFactory security.config
+ create-custom-resource --restype java.util.Properties --factoryclass org.glassfish.resources.custom.factory.PropertiesFactory elasticsearch.config
+ create-custom-resource --restype java.util.Properties --factoryclass org.glassfish.resources.custom.factory.PropertiesFactory office.config
+ create-custom-resource --restype java.util.Properties --factoryclass org.glassfish.resources.custom.factory.PropertiesFactory oauth.config
+ create-jvm-options -- -Dfile.encoding=UTF-8
+ delete-jvm-options -- -Xmx512m
+ create-jvm-options -- -Xmx${ENV=HEAP_SIZE}
+ create-javamail-resource --mailhost ${ENV=SMTP_HOST} --mailuser ${ENV=SMTP_USER} --fromaddress ${ENV=SMTP_FROM_ADDR} --property mail.smtp.host=${ENV=SMTP_HOST}:mail.smtp.starttls.enable=false:mail.smtp.port=${ENV=SMTP_PORT}:mail.smtp.auth=false mail/docdokuSMTP
+ set server.network-config.protocols.protocol.http-listener-1.http.upload-timeout-enabled=false
+ set server.network-config.protocols.protocol.http-listener-1.http.connection-upload-timeout-millis=-1
+ set resources.custom-resource.docdokuplm.config.property.vaultPath=/var/lib/docdoku/vault
+ set resources.custom-resource.docdokuplm.config.property.conversionsPath=/var/lib/docdoku/conversions
+ set resources.custom-resource.docdokuplm.config.property.codebase=${ENV=DOCDOKU_PLM_CODEBASE}
+ set resources.custom-resource.auth.config.property.jwtEnabled=${ENV=JWT_ENABLED}
+ set resources.custom-resource.auth.config.property.jwtKey=${ENV=JWT_KEY}
+ set resources.custom-resource.auth.config.property.sessionEnabled=${ENV=SESSION_ENABLED}
+ set resources.custom-resource.auth.config.property.basicHeaderEnabled=${ENV=BASIC_AUTH_ENABLED}
+ set resources.custom-resource.elasticsearch.config.property.serverUri=${ENV=ES_SERVER_URI}
+ set resources.custom-resource.elasticsearch.config.property.password=${ENV=ES_SERVER_PWD}
+ set resources.custom-resource.elasticsearch.config.property.username=${ENV=ES_SERVER_USERNAME}
+ set resources.custom-resource.elasticsearch.config.property.awsService=${ENV=ES_SERVER_AWS_SERVICE}
+ set resources.custom-resource.elasticsearch.config.property.awsRegion=${ENV=ES_SERVER_AWS_REGION}
+ set resources.custom-resource.elasticsearch.config.property.awsAccessKey=${ENV=ES_SERVER_AWS_KEY}
+ set resources.custom-resource.elasticsearch.config.property.awsSecretKey=${ENV=ES_SERVER_AWS_SECRET}
+ set resources.custom-resource.elasticsearch.config.property.indexPrefix=${ENV=ES_PREFIX}
+ set resources.custom-resource.office.config.property.office_home=/var/lib/libreoffice
+ set resources.custom-resource.office.config.property.office_port=8100
+ set resources.custom-resource.security.config.property.keystoreLocation=/opt/payara41/keystore
+ set resources.custom-resource.security.config.property.keystorePass=${ENV=KEYSTORE_PASS}
+ set resources.custom-resource.security.config.property.keyAlias=${ENV=KEYSTORE_KEY_ALIAS}
+ set resources.custom-resource.security.config.property.keystoreType=${ENV=KEYSTORE_TYPE}
+ set resources.custom-resource.security.config.property.keyPass=${ENV=KEYSTORE_KEY_PASS}
+ create-custom-resource --restype java.lang.String --factoryclass org.glassfish.resources.custom.factory.PrimitivesAndStringFactory --property value=/opt/plugins/solidworks/license.txt datakit/solidworks/licensePath
+ create-custom-resource --restype java.lang.String --factoryclass org.glassfish.resources.custom.factory.PrimitivesAndStringFactory --property value=/opt/plugins/solidworks/schema datakit/solidworks/schemaDir
+ create-custom-resource --restype java.lang.String --factoryclass org.glassfish.resources.custom.factory.PrimitivesAndStringFactory --property value=/opt/plugins/catia/license.txt datakit/catia/licensePath
+ set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=${ENV=DEBUG}
+ set configs.config.server-config.admin-service.das-config.autodeploy-enabled=${ENV=DEBUG}

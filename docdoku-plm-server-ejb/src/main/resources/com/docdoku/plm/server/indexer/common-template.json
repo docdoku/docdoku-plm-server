@@ -1,0 +1,72 @@
+{
+  "index_patterns": ["*-docdoku-plm-*"],
+  "order" : 0,
+  "settings": {
+  },
+  "mappings": {
+    "_doc": {
+      "_source": {
+        "enabled": true
+      },
+      "properties": {
+        "workspaceId":{
+          "type":"keyword"
+        },
+        "attributes": {
+          "type": "nested",
+          "properties": {
+            "attr_name": {
+              "type": "keyword"
+            },
+            "attr_value": {
+              "type": "text"
+            }
+          }
+        },
+        "files": {
+          "type": "nested",
+          "properties": {
+            "fileName": {
+              "type": "keyword"
+            },
+            "content": {
+              "type": "text"
+            }
+          }
+        },
+        "authorLogin": {
+          "type": "keyword"
+        },
+        "authorName": {
+          "type": "keyword"
+        },
+        "creationDate": {
+          "type": "date",
+          "ignore_malformed": true
+        },
+        "description": {
+          "type": "text"
+        },
+        "iteration": {
+          "type": "integer"
+        },
+        "modificationDate": {
+          "type": "date",
+          "ignore_malformed": true
+        },
+        "revisionNote": {
+          "type": "text"
+        },
+        "type": {
+          "type": "keyword"
+        },
+        "version": {
+          "type": "keyword"
+        },
+        "workflow": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
