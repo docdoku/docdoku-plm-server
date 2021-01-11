@@ -99,7 +99,7 @@ public class IndexerManagerBean implements IIndexerManagerLocal {
     @Inject
     private IndicesUtils indicesUtils;
 
-    private static final String I18N_CONF = "/com/docdoku/core/i18n/LocalStrings";
+    private static final String I18N_CONF = "/com/docdoku/plm/server/core/i18n/LocalStrings";
     private static final Logger LOGGER = Logger.getLogger(IndexerManagerBean.class.getName());
     private static final Integer BULK_SIZE = 50;
 

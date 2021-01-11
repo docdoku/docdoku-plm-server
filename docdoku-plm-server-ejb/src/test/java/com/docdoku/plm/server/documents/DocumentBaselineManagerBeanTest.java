@@ -55,7 +55,7 @@ import java.util.Properties;
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentBaselineManagerBeanTest {
 
-    private static final String PROPERTIES_BASE_NAME = "/com/docdoku/core/i18n/LocalStrings";
+    private static final String PROPERTIES_BASE_NAME = "/com/docdoku/plm/server/core/i18n/LocalStrings";
 
     @Mock
     private WorkspaceDAO workspaceDAO;
