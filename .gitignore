@@ -19,3 +19,6 @@ bin/
 .project
 .classpath
 .vscode
+*.versionsBackup
+*.releaseBackup
+release.properties
