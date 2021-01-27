@@ -39,8 +39,5 @@ create-jdbc-connection-pool --restype javax.sql.ConnectionPoolDataSource --datas
  set resources.custom-resource.security.config.property.keyAlias=${ENV=KEYSTORE_KEY_ALIAS}
  set resources.custom-resource.security.config.property.keystoreType=${ENV=KEYSTORE_TYPE}
  set resources.custom-resource.security.config.property.keyPass=${ENV=KEYSTORE_KEY_PASS}
- create-custom-resource --restype java.lang.String --factoryclass org.glassfish.resources.custom.factory.PrimitivesAndStringFactory --property value=/opt/plugins/solidworks/license.txt datakit/solidworks/licensePath
- create-custom-resource --restype java.lang.String --factoryclass org.glassfish.resources.custom.factory.PrimitivesAndStringFactory --property value=/opt/plugins/solidworks/schema datakit/solidworks/schemaDir
- create-custom-resource --restype java.lang.String --factoryclass org.glassfish.resources.custom.factory.PrimitivesAndStringFactory --property value=/opt/plugins/catia/license.txt datakit/catia/licensePath
  set configs.config.server-config.admin-service.das-config.dynamic-reload-enabled=${ENV=DEBUG}
  set configs.config.server-config.admin-service.das-config.autodeploy-enabled=${ENV=DEBUG}

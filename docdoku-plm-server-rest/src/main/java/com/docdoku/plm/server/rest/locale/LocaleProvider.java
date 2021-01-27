@@ -60,9 +60,9 @@ public class LocaleProvider {
     public void init() {
         try {
             InitialContext ctx = new InitialContext();
-            IContextManagerLocal contextManager = (IContextManagerLocal) ctx.lookup("java:app/docdoku-server-ejb/ContextManagerBean!com.docdoku.plm.server.core.services.IContextManagerLocal");
+            IContextManagerLocal contextManager = (IContextManagerLocal) ctx.lookup("java:app/docdoku-plm-server-ejb/ContextManagerBean!com.docdoku.plm.server.core.services.IContextManagerLocal");
             if (contextManager.isCallerInRole(UserGroupMapping.REGULAR_USER_ROLE_ID) || contextManager.isCallerInRole(UserGroupMapping.ADMIN_ROLE_ID)) {
-                IAccountManagerLocal accountManager = (IAccountManagerLocal) ctx.lookup("java:app/docdoku-server-ejb/AccountManagerBean!com.docdoku.plm.server.core.services.IAccountManagerLocal");
+                IAccountManagerLocal accountManager = (IAccountManagerLocal) ctx.lookup("java:app/docdoku-plm-server-ejb/AccountManagerBean!com.docdoku.plm.server.core.services.IAccountManagerLocal");
                 try {
                     Account myAccount = accountManager.getMyAccount();
                     locale = myAccount.getLocale();

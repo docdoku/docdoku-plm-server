@@ -1,4 +1,5 @@
-FROM docdoku/docdoku-plm-server-base:latest
+ARG VERSION=latest
+FROM docdoku/docdoku-plm-server-base:$VERSION
 
 COPY docdoku-plm-server-ear/target/docdoku-plm-server-ear.ear $DEPLOY_DIR
 COPY docker/entrypoint.sh /entrypoint.sh

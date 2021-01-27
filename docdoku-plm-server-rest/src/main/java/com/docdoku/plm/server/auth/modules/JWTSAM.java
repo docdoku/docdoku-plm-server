@@ -69,7 +69,7 @@ public class JWTSAM extends CustomSAM {
         ITokenManagerLocal tokenManager;
 
         try {
-            final String beanName = "java:app/docdoku-server-ejb/JWTokenManager!com.docdoku.plm.server.core.services.ITokenManagerLocal";;
+            final String beanName = "java:app/docdoku-plm-server-ejb/JWTokenManager!com.docdoku.plm.server.core.services.ITokenManagerLocal";;
             InitialContext context = new InitialContext();
             tokenManager = (ITokenManagerLocal) context.lookup(beanName);
         } catch (NamingException e) {
