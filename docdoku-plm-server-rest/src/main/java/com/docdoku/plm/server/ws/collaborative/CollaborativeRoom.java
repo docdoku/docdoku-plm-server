@@ -21,6 +21,7 @@
 package com.docdoku.plm.server.ws.collaborative;
 
 
+import com.docdoku.plm.server.ws.WebSocketApplication;
 import com.docdoku.plm.server.ws.chat.Room;
 
 import javax.json.*;
@@ -87,7 +88,7 @@ public class CollaborativeRoom {
     public JsonObject getContext() {
         JsonArrayBuilder contextSlaves = Json.createArrayBuilder();
         for (Session s : this.getSlaves()) {
-            contextSlaves.add(s.getUserPrincipal().getName());
+            contextSlaves.add(getLoginFrom(s.getUserProperties()));
         }
 
         JsonArrayBuilder contextPendingUsers = Json.createArrayBuilder();
@@ -120,7 +121,11 @@ public class CollaborativeRoom {
     }
 
     public String getMasterName() {
-        return (master==null)?"":master.getUserPrincipal().getName();
+        return (master==null)?"": getLoginFrom(master.getUserProperties());
+    }
+
+    public String getLoginFrom(Map<String, Object> userProperties){
+        return (String) userProperties.get(WebSocketApplication.LOGIN);
     }
 
     public void setMaster(Session master) {
@@ -166,7 +171,7 @@ public class CollaborativeRoom {
     public Session findUserSession(String user){
         Session userSession = null;
         for (Session s : this.getSlaves()) {
-            if (s.getUserPrincipal().getName().equals(user)) {
+            if (getLoginFrom(s.getUserProperties()).equals(user)) {
                 userSession = s;
             }
         }

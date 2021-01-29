@@ -56,6 +56,7 @@ public class WebSocketApplication {
     private static final Logger LOGGER = Logger.getLogger(WebSocketApplication.class.getName());
 
     private static final String AUTH = "AUTH";
+    public static final String LOGIN = "LOGIN";
 
     @Inject
     @Any
@@ -129,6 +130,7 @@ public class WebSocketApplication {
                 String login = userGroupMapping.getLogin();
                 if (login != null) {
                     session.getUserProperties().put(AUTH, jwt);
+                    session.getUserProperties().put(LOGIN, login);
                     webSocketSessionsManager.addSession(login, session);
                     return;
                 }
