@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.docdoku.plm</groupId>
         <artifactId>docdoku-plm-server</artifactId>
-        <version>2.6.2-SNAPSHOT</version>
+        <version>2.6.2</version>
     </parent>
     <artifactId>docdoku-plm-server-rest</artifactId>
     <packaging>war</packaging>
@@ -101,7 +101,7 @@
         <dependency>
             <groupId>com.docdoku.plm</groupId>
             <artifactId>docdoku-plm-server-ext</artifactId>
-            <version>2.6.2-SNAPSHOT</version>
+            <version>2.6.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
