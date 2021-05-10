@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.docdoku.plm</groupId>
         <artifactId>docdoku-plm-server</artifactId>
-        <version>2.6.2</version>
+        <version>2.6.3-SNAPSHOT</version>
     </parent>
     <artifactId>docdoku-plm-server-office-doc</artifactId>
     <packaging>jar</packaging>
