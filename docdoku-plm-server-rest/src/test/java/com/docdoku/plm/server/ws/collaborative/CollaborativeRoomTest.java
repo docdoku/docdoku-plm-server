@@ -21,6 +21,8 @@
 package com.docdoku.plm.server.ws.collaborative;
 
 
+import com.docdoku.plm.server.ws.WebSocketApplication;
+import com.docdoku.plm.server.ws.WebSocketMessage;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -28,14 +30,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import com.docdoku.plm.server.ws.WebSocketMessage;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.websocket.Session;
 import java.io.StringReader;
-import java.security.Principal;
+import java.util.HashMap;
 
 /**
  * @author Asmae CHADID
@@ -46,20 +47,19 @@ public class CollaborativeRoomTest {
     private static Session slave1 = Mockito.mock(Session.class);
     private static Session slave2 = Mockito.mock(Session.class);
 
-    private static Principal principalMaster = Mockito.mock(Principal.class);
-    private static Principal principal1 = Mockito.mock(Principal.class);
-    private static Principal principal2 = Mockito.mock(Principal.class);
-
-
     @BeforeClass
     public static void init() {
-        Mockito.when(master.getUserPrincipal()).thenReturn(principalMaster);
-        Mockito.when(slave1.getUserPrincipal()).thenReturn(principal1);
-        Mockito.when(slave2.getUserPrincipal()).thenReturn(principal2);
+        Mockito.when(master.getUserProperties()).thenReturn(new HashMap<String, Object>() {{
+            put(WebSocketApplication.LOGIN, "master1");
+        }});
 
-        Mockito.when(master.getUserPrincipal().getName()).thenReturn("master1");
-        Mockito.when(slave1.getUserPrincipal().getName()).thenReturn("slave1");
-        Mockito.when(slave2.getUserPrincipal().getName()).thenReturn("slave2");
+        Mockito.when(slave1.getUserProperties()).thenReturn(new HashMap<String, Object>() {{
+            put(WebSocketApplication.LOGIN, "slave1");
+        }});
+
+        Mockito.when(slave2.getUserProperties()).thenReturn(new HashMap<String, Object>() {{
+            put(WebSocketApplication.LOGIN, "slave2");
+        }});
     }
 
     @Test
@@ -83,7 +83,7 @@ public class CollaborativeRoomTest {
         //Given
         CollaborativeRoom collaborativeRoom = Mockito.spy(new CollaborativeRoom(master));
         //Then
-        Assert.assertTrue(CollaborativeRoom.getByKeyName(collaborativeRoom.getKey()) != null);
+        Assert.assertNotNull(CollaborativeRoom.getByKeyName(collaborativeRoom.getKey()));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class CollaborativeRoomTest {
         collaborativeRoom1.delete();
         collaborativeRoom2.delete();
         //Then
-        Assert.assertTrue(CollaborativeRoom.getAllCollaborativeRooms().size() == 2);
+        Assert.assertEquals(2, CollaborativeRoom.getAllCollaborativeRooms().size());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class CollaborativeRoomTest {
         //Given
         CollaborativeRoom collaborativeRoom1 = Mockito.spy(new CollaborativeRoom(master));
         //Then
-        Assert.assertTrue("master1".equals(collaborativeRoom1.getLastMaster()));
+        Assert.assertEquals("master1", collaborativeRoom1.getLastMaster());
     }
 
     @Test
@@ -127,8 +127,7 @@ public class CollaborativeRoomTest {
         //When
         collaborativeRoom1.addSlave(slave1);
         //Then
-        Assert.assertTrue(collaborativeRoom1.getSlaves().size() == 1);
-
+        Assert.assertEquals(1, collaborativeRoom1.getSlaves().size());
     }
 
     @Test
@@ -140,7 +139,7 @@ public class CollaborativeRoomTest {
         collaborativeRoom1.addSlave(slave2);
         collaborativeRoom1.removeSlave(slave1);
         //Then
-        Assert.assertTrue(collaborativeRoom1.getSlaves().get(0).equals(slave2));
+        Assert.assertEquals(slave2, collaborativeRoom1.getSlaves().get(0));
     }
 
     @Test
@@ -152,7 +151,7 @@ public class CollaborativeRoomTest {
         collaborativeRoom1.addPendingUser("user2");
         collaborativeRoom1.addPendingUser("user2");
         //Then
-        Assert.assertTrue(collaborativeRoom1.getPendingUsers().size() == 3);
+        Assert.assertEquals(3, collaborativeRoom1.getPendingUsers().size());
     }
 
     @Test
@@ -167,7 +166,7 @@ public class CollaborativeRoomTest {
 
         collaborativeRoom1.removePendingUser("user2");
         //Then
-        Assert.assertTrue(collaborativeRoom1.getPendingUsers().size() == 3);
+        Assert.assertEquals(3, collaborativeRoom1.getPendingUsers().size());
     }
 
     @Test
@@ -178,9 +177,9 @@ public class CollaborativeRoomTest {
         collaborativeRoom1.addSlave(slave1);
         collaborativeRoom1.addSlave(slave2);
         //Then
-        Assert.assertTrue(collaborativeRoom1.findUserSession("slave1").equals(slave1));
-        Assert.assertTrue(collaborativeRoom1.findUserSession("slave2").equals(slave2));
-        Assert.assertTrue(collaborativeRoom1.findUserSession("slave3") == null);
+        Assert.assertEquals(slave1, collaborativeRoom1.findUserSession("slave1"));
+        Assert.assertEquals(slave2, collaborativeRoom1.findUserSession("slave2"));
+        Assert.assertNull(collaborativeRoom1.findUserSession("slave3"));
     }
 
     @Test
@@ -238,7 +237,7 @@ public class CollaborativeRoomTest {
 
         JsonObject commands = collaborativeMessage.getJsonObject("broadcastMessage");
         room.saveCommand(commands);
-        Assert.assertTrue(room.getCommands().entrySet().size() == 1);
+        Assert.assertEquals(1, room.getCommands().entrySet().size());
     }
 
 
